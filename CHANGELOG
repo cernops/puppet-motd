@@ -1,3 +1,7 @@
+2014 02 20  Steve Traylen  <steve.traylen@cern.ch>
+    * 0.1.2 release
+    * Correct syntax for requirements in Modulefile.
+
 2013-12-17  Steve Traylen  <steve.traylen@cern.ch>
 
     * 0.1.1 release
