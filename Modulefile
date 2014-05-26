@@ -1,5 +1,5 @@
 name    'CERNOps-motd'
-version '0.1.2'
+version '0.1.3'
 source 'https://github.com/cernops/puppet-motd'
 author 'CERNOps'
 license 'Apache License, Version 2.0'
