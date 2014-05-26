@@ -24,8 +24,8 @@ files in an /etc/motd-archive.
 include 'motd'
 
 # Specify some headers to allways show.
-motd::header {'welcome': entry => "Welcome to box ${::fqdn}"}
-motd::header {'message' entry => "Please behave"}
+motd::header {'welcome': message => "Welcome to box ${::fqdn}"}
+motd::header {'message' message => "Please behave"}
    
 # Specify a time stamped short notice for motd.
 motd::news {'It is christmas': date => '2013-12-25'}
