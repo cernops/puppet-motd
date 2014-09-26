@@ -3,9 +3,9 @@
 <% if @message -%>
 <% if scope.function_is_array([@message]) -%>
 <% @message.each do |msg| -%>
-* <%= msg %>
+*   <%= msg %>
 <% end -%>
 <% else -%>
-* <%= @message.scan(/\S.{0,#{line_length}}\S(?=\s|$)|\S+/).join("\n* ") %>
+*   <%= @message.scan(/\S.{0,#{line_length}}\S(?=\s|$)|\S+/).join("\n*   ") %>
 <% end -%>
 <% end -%>

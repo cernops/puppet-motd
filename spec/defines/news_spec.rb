@@ -50,8 +50,8 @@ describe 'motd::news' do
 
     it do
       should contain_concat__fragment('motd_frag_New title').with_content("* 2013-12-11 - New title
-* Some very long message that requires being wrapped to a new line
-* of text.
+*   Some very long message that requires being wrapped to a new line
+*   of text.
 ")
     end
   end
@@ -67,7 +67,7 @@ describe 'motd::news' do
 
     it do
       should contain_concat__fragment('motd_frag_New title').with_content("* 2013-12-11 - New title
-* Some very long message that requires being wrapped to a new line of text.
+*   Some very long message that requires being wrapped to a new line of text.
 ")
     end
   end
@@ -82,9 +82,9 @@ describe 'motd::news' do
 
     it do
       should contain_concat__fragment('motd_frag_New title').with_content("* 2013-12-11 - New title
-* Line 1
-* Line 2
-* Line 3
+*   Line 1
+*   Line 2
+*   Line 3
 ")
     end
   end
