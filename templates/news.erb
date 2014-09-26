@@ -1,4 +1,11 @@
-* <%= @date %> - <%= @name %>
+<% line_length = scope.lookupvar('motd::news_line_length') -%>
+* <%= @date %> - <%= @newstitle %>
 <% if @message -%>
-* <%= @message.scan(/\S.{0,62}\S(?=\s|$)|\S+/).join("\n* ") %>
+<% if scope.function_is_array([@message]) -%>
+<% @message.each do |msg| -%>
+* <%= msg %>
+<% end -%>
+<% else -%>
+* <%= @message.scan(/\S.{0,#{line_length}}\S(?=\s|$)|\S+/).join("\n* ") %>
+<% end -%>
 <% end -%>

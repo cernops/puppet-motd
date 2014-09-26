@@ -1,7 +1,8 @@
 # Class: motd
 class motd (
-  $motd_header = $::motd::params::motd_header,
-  $delimiter   = $::motd::params::delimiter
+  $motd_header      = $::motd::params::motd_header,
+  $delimiter        = $::motd::params::delimiter,
+  $news_line_length = 62
 ) inherits motd::params {
   $motd_archive = '/etc/motd-archive'
   $motd = '/etc/motd'

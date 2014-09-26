@@ -1,2 +1,14 @@
-spec/fixtures
+# Testing and development
+.vagrant/
+spec/fixtures/modules/
+spec/fixtures/manifests/
+.rspec_system/
+.vagrant/
+/Vagrantfile
 
+# Bundler
+Gemfile.lock
+.bundle/
+
+# Puppet module generated
+pkg/

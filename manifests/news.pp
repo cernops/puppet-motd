@@ -31,30 +31,35 @@
 #
 define motd::news ($date, $newstitle = $title, $message = undef) {
 
+  include ::motd
+
   validate_re($date,'^[0-9]{4}-[0-9]{2}-[0-9]{2}$','date must be of format YYYY-MM-DD, e.g 2013-12-1')
 
   $year_month = regsubst($date, '^(\d+)\-(\d+)\-(\d+)$', '\1\2')
   $motd_archive_files = "/etc/motd-archive/${year_month}"
 
-  $hash =  { mode => '0644', owner => 'root', group => 'root'}
-  ensure_resource('concat', $motd_archive_files, $hash)
+  $hash =  {
+    "${motd_archive_files}" => {
+      mode => '0644', owner => 'root', group => 'root'
+    }
+  }
+  create_resources('concat', $hash)
 
   $newsdate = inline_template('<%=  Date.strptime(@date, \'%Y-%m-%d\') + 30 -%>')
-  $currentdate = inline_template('<%= Date.strptime(Time.new.strftime("%Y-%m-%d"), \'%Y-%m-%d\') -%>')
+  $currentdate = strftime('%Y-%m-%d')
 
   if ($currentdate < $newsdate) {
-    concat::fragment { "motd_frag_${name}":
+    concat::fragment { "motd_frag_${title}":
       target  => '/etc/motd',
       content => template('motd/news.erb'),
       order   => "07-${date}",
     }
-
   }
 
-  concat::fragment { "motd_archive_frag_${date}_${name}":
+  concat::fragment { "motd_archive_frag_${date}_${title}":
     target  => $motd_archive_files,
     content => template('motd/news.erb'),
-    order   => "01-${date}-${name}",
+    order   => "01-${date}-${title}",
   }
 
 }
