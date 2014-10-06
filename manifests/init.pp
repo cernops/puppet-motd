@@ -1,9 +1,15 @@
 # Class: motd
 class motd (
-  $motd_header      = $::motd::params::motd_header,
-  $delimiter        = $::motd::params::delimiter,
-  $news_line_length = 62
+  $motd_header          = $::motd::params::motd_header,
+  $delimiter            = $::motd::params::delimiter,
+  $issue_content        = $::motd::params::issue_content,
+  $issue_line_length    = 80,
+  $center_issue_content = false,
+  $news_line_length     = 62,
 ) inherits motd::params {
+
+  validate_bool($center_issue_content)
+
   $motd_archive = '/etc/motd-archive'
   $motd = '/etc/motd'
 
@@ -29,6 +35,22 @@ class motd (
   motd::header{ 'motd_footer':
     message => $delimiter,
     order   => '10',
+  }
+
+  file { '/etc/issue':
+    ensure  => 'file',
+    content => template('motd/issue.erb'),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+  }
+
+  file { '/etc/issue.net':
+    ensure  => 'file',
+    content => template('motd/issue.erb'),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
   }
 }
 
