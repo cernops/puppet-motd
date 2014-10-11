@@ -43,7 +43,9 @@ define motd::news ($date, $newstitle = $title, $message = undef) {
       mode => '0644', owner => 'root', group => 'root'
     }
   }
-  create_resources('concat', $hash)
+  if ! defined(Concat[$motd_archive_files]) {
+    create_resources('concat', $hash)
+  }
 
   $newsdate = inline_template('<%=  Date.strptime(@date, \'%Y-%m-%d\') + 30 -%>')
   $currentdate = strftime('%Y-%m-%d')
