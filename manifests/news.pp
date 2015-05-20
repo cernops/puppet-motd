@@ -61,7 +61,7 @@ define motd::news ($date, $newstitle = $title, $message = undef) {
   concat::fragment { "motd_archive_frag_${date}_${title}":
     target  => $motd_archive_files,
     content => template('motd/news.erb'),
-    order   => "01-${date}-${title}",
+    order   => "01-${date}",
   }
 
 }
