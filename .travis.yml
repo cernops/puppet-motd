@@ -31,7 +31,7 @@ deploy:
   provider: puppetforge
   user: CERNOps
   password:
-    secure: "Wov2HagpIdyxUW8FcL9W9yQzE8se01sTA3mbKfwUaqpTYm8XllfdrmNTpEbe1V+675SUBFR546jeXAA2YrLdOXbfXNAwL1ITHg1thnd+6fGz1i0KX77mMp5Mu0V0DnN1nyQAH3q9KLPblbYlP5ETYHsw9ImkiPQCtURxSLVb/co="
+    secure: "XW4PYhVZcj7k17PBtNlfdW7CMplfmFDtT+L1iQgDSHiTll1FjDQVhTRqPwFuiXc7qzwnv5O7gjeVDuza8FdVXFwOlO81RV8R8n8o31Bcn1Z3MPVs0KCVGDfPV6xyvubzcfOCjakXg/3tFUT9Ltl91YfzeGBLa1YF57U3PiTs5Zg="
   on:
     tags: true
     all_branches: true
