@@ -1,0 +1,14 @@
+<% line_length = scope.lookupvar('motd::issue_line_length').to_i
+if scope.function_is_array([@issue_content])
+  content = @issue_content
+else
+  content = @issue_content.scan(/\S.{0,#{line_length}}\S(?=\s|$)|\S+/)
+end -%>
+<% content.each do |line| -%>
+<% if @center_issue_content -%>
+<%= line.center(line_length) %>
+<% else -%>
+<%= line %>
+<% end -%>
+<% end -%>
+
