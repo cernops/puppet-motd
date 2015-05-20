@@ -23,7 +23,7 @@ describe 'motd::news' do
     let(:params) { { :date => '2013-12-11'}}
 
     it do 
-      should contain_file("/etc/motd-archive/#{shortdate}").with({
+      should contain_concat("/etc/motd-archive/#{shortdate}").with({
        'ensure'  => 'present',
        'owner'   => 'root',
        'group'   => 'root',

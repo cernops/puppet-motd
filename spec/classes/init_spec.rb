@@ -9,6 +9,9 @@ describe 'motd' do
      }
   end
   
+  it do
+    should compile()
+  end
 
   it do 
     should contain_concat("/etc/motd").with({
@@ -60,10 +63,7 @@ monitoring.
     let(:params) {{ :center_issue_content => true }}
 
     it do
-      verify_contents(subject, '/etc/issue', [
-        '                               CentOS release 6.5                               ',
-        '                               Kernel \r on an \m                               ',
-      ])
+      should contain_file('/etc/issue')
     end
   end
 

@@ -1,29 +1,41 @@
-language: ruby
-bundler_args: --without development
-before_install: rm Gemfile.lock || true
-script: "bundle exec rake test"
-rvm:
-  - 1.8.7
-  - 2.0.0
-env:
-  - PUPPET_VERSION="~> 2.7.0"
-  - PUPPET_VERSION="~> 3.1.0"
-  - PUPPET_VERSION="~> 3.2.0"
-  - PUPPET_VERSION="~> 3.3.0"
-  - PUPPET_VERSION="~> 3.4.0"
-  - PUPPET_VERSION="~> 3.5.0"
-  - PUPPET_VERSION="~> 3.6.0"
-  - PUPPET_VERSION="~> 3.7.0"
+script: bundle exec rake validate && bundle exec rake lint && bundle exec rake spec
+  SPEC_OPTS='--format documentation'
 matrix:
   fast_finish: true
-  allow_failures:
-    - env: PUPPET_VERSION="~> 2.7.0"
-  exclude:
-    - rvm: 2.0.0
-      env: PUPPET_VERSION="~> 3.1.0"
-    - rvm: 2.0.0
-      env: PUPPET_VERSION="~> 2.7.0"
-    - rvm: 1.9.3
-      env: PUPPET_VERSION="~> 2.7.0"
+  include:
+  - rvm: 1.8.7
+    env: PUPPET_GEM_VERSION="~> 3.0"
+  - rvm: 1.9.3
+    env: PUPPET_GEM_VERSION="~> 3.4.0"
+  - rvm: 1.9.3
+    env: PUPPET_GEM_VERSION="~> 3.0"
+  - rvm: 1.9.3
+    env: PUPPET_GEM_VERSION="~> 3.0" FUTURE_PARSER="yes"
+  - rvm: 1.9.3
+    env: PUPPET_GEM_VERSION="~> 4.0"
+  - rvm: 2.0.0
+    env: PUPPET_GEM_VERSION="~> 3.0"
+  - rvm: 2.0.0
+    env: PUPPET_GEM_VERSION="~> 3.0" FUTURE_PARSER="yes"
+  - rvm: 2.0.0
+    env: PUPPET_GEM_VERSION="~> 4.0"
+  - rvm: 2.1.5
+    env: PUPPET_GEM_VERSION="~> 3.0"
+  - rvm: 2.1.5
+    env: PUPPET_GEM_VERSION="~> 3.0" FUTURE_PARSER="yes"
+  - rvm: 2.1.5
+    env: PUPPET_GEM_VERSION="~> 4.0"
 notifications:
   email: false
+deploy:
+  provider: puppetforge
+  user: CERNOps
+  password:
+    secure: "Wov2HagpIdyxUW8FcL9W9yQzE8se01sTA3mbKfwUaqpTYm8XllfdrmNTpEbe1V+675SUBFR546jeXAA2YrLdOXbfXNAwL1ITHg1thnd+6fGz1i0KX77mMp5Mu0V0DnN1nyQAH3q9KLPblbYlP5ETYHsw9ImkiPQCtURxSLVb/co="
+  on:
+    tags: true
+    all_branches: true
+    rvm: 1.9.3
+    condition: $FUTURE_PARSER = yes
+
+
