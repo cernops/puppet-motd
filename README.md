@@ -1,3 +1,6 @@
+[![Puppet Forge](http://img.shields.io/puppetforge/v/CERNOps/motd.svg)](https://forge.puppetlabs.com/CERNOps/motd)
+[![Build Status](https://travis-ci.org/cernops/puppet-motd.svg?branch=master)](https://travis-ci.org/cernops/puppet-motd)
+
 ## CERNOps-motd puppet module
 
 This is the motd module. It can be used to maintain a complex and dynamic /etc/motd file
