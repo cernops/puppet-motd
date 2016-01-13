@@ -22,6 +22,9 @@
 #    [*date*] - [*newtitle*]
 #       [*message*]
 #
+# [*major*] 
+#    Specifies an array of $::operatingsystemmajrelease values that
+#    we consider the news to be relevent for.
 #
 # === Examples
 #    motd::news{'package x installed': date => '2013-12-11'}
@@ -29,7 +32,7 @@
 #        date    => '2013-12-11',
 #        message => 'Package X can be used for Y'
 #
-define motd::news ($date, $newstitle = $title, $message = undef) {
+define motd::news ($date, $newstitle = $title, $message = undef, $major = []) {
 
   include ::motd
 
@@ -50,19 +53,21 @@ define motd::news ($date, $newstitle = $title, $message = undef) {
   $newsdate = inline_template('<%=  Date.strptime(@date, \'%Y-%m-%d\') + 30 -%>')
   $currentdate = strftime('%Y-%m-%d')
 
-  if ($currentdate < $newsdate) {
-    concat::fragment { "motd_frag_${title}":
-      target  => '/etc/motd',
+
+  if size($major) == 0 or member($major,$::operatingsystemmajrelease) {
+    if ($currentdate < $newsdate) {
+      concat::fragment { "motd_frag_${title}":
+        target  => '/etc/motd',
+        content => template('motd/news.erb'),
+        order   => "07-${date}",
+      }
+    }
+
+    concat::fragment { "motd_archive_frag_${date}_${title}":
+      target  => $motd_archive_files,
       content => template('motd/news.erb'),
-      order   => "07-${date}",
+      order   => "01-${date}",
     }
   }
-
-  concat::fragment { "motd_archive_frag_${date}_${title}":
-    target  => $motd_archive_files,
-    content => template('motd/news.erb'),
-    order   => "01-${date}",
-  }
-
 }
 

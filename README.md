@@ -37,10 +37,14 @@ motd::news {'It is christmas': date => '2013-12-25'}
 motd::news {'package X': 
   date    => '2013-12-11',
   message => 'Package X is really good at solving the universe\'s problems.',
+  major   => ['5','6'],
   require => Package['X']
 }
 ```
 In addition a default header can also be specified via hiera, see params.pp for details.
+
+The optional `major` array is a list of $::operatingsystemmajrelease version which it applies
+to. If no major array is specified news will be assumed to apply to all.
 
 
 ### License

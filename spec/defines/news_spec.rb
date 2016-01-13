@@ -14,7 +14,8 @@ describe 'motd::news' do
     strftime.stubs(:call).returns(current_date)
   end
 
-  let(:facts) {{ :concat_basedir => '/doesnotexist' }}
+  let(:facts) {{ :concat_basedir         => '/doesnotexist',
+                 :operatingsystemmajrelease => '22' }}
   let(:title) {'New title'}
 
   let(:shortdate) { default_date.gsub(/^(\d+)\-(\d+)\-(\d+)$/,'\1\2') }
@@ -88,6 +89,24 @@ describe 'motd::news' do
 ")
     end
   end
+
+  context 'with major matching os' do
+    let(:params) {{ :newstitle => "Foo", :date => '2013-12-11', :major => ['15','22'] }}
+
+    it do
+      should contain_concat__fragment('motd_frag_New title').with_content("* 2013-12-11 - Foo\n")
+    end
+  end
+
+  context 'with major not matching os' do
+    let(:params) {{ :newstitle => "Foo", :date => '2013-12-11', :major => ['15','18'] }}
+
+    it do
+      should_not contain_concat__fragment('motd_frag_New title')
+    end
+  end
+
+
 
 end
 
