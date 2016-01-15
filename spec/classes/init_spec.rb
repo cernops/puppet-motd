@@ -23,33 +23,48 @@ describe 'motd' do
   end
 
   it do
-    should contain_file('/etc/issue').with({
-      :ensure   => 'file',
-      :owner    => 'root',
-      :group    => 'root',
-      :mode     => '0644',
-      :content  => 'CentOS release 6.5
-Kernel \r on an \m
-
-'
-    })
+    should_not contain_file('/etc/issue')
+  end
+  it do
+    should_not contain_file('/etc/issue.net')
   end
 
-  it do
-    should contain_file('/etc/issue.net').with({
-      :ensure => 'file',
-      :owner  => 'root',
-      :group  => 'root',
-      :mode   => '0644',
-      :content  => 'CentOS release 6.5
+
+
+  context 'when enable_issue is true' do
+    let(:params) {{ :enable_issue => true }}
+    it do
+       should contain_file('/etc/issue').with({
+        :ensure   => 'file',
+        :owner    => 'root',
+        :group    => 'root',
+        :mode     => '0644',
+        :content  => 'CentOS release 6.5
 Kernel \r on an \m
 
 '
-    })
+      })
+    end
   end
 
   context 'when issue_content is a long string' do
-    let(:params) {{ :issue_content => "This system is available to authorized users only. User activities are subject to monitoring." }}
+    let(:params) {{ :enable_issue => true }}
+    it do
+      should contain_file('/etc/issue.net').with({
+        :ensure => 'file',
+        :owner  => 'root',
+        :group  => 'root',
+        :mode   => '0644',
+        :content  => 'CentOS release 6.5
+Kernel \r on an \m
+
+'
+     })
+    end
+  end
+
+  context 'when issue_content is a long string' do
+    let(:params) {{ :enable_issue => true, :issue_content => "This system is available to authorized users only. User activities are subject to monitoring." }}
 
     it do
       should contain_file('/etc/issue').with_content('This system is available to authorized users only. User activities are subject to
@@ -60,7 +75,7 @@ monitoring.
   end
 
   context 'when center_issue_content => true' do
-    let(:params) {{ :center_issue_content => true }}
+    let(:params) {{ :enable_issue => true, :center_issue_content => true }}
 
     it do
       should contain_file('/etc/issue')

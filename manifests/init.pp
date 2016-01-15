@@ -2,12 +2,14 @@
 class motd (
   $motd_header          = $::motd::params::motd_header,
   $delimiter            = $::motd::params::delimiter,
+  $enable_issue         = false,
   $issue_content        = $::motd::params::issue_content,
   $issue_line_length    = 80,
   $center_issue_content = false,
   $news_line_length     = 62,
 ) inherits motd::params {
 
+  validate_bool($enable_issue)
   validate_bool($center_issue_content)
 
   $motd_archive = '/etc/motd-archive'
@@ -37,20 +39,21 @@ class motd (
     order   => '10',
   }
 
-  file { '/etc/issue':
-    ensure  => 'file',
-    content => template('motd/issue.erb'),
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-  }
-
-  file { '/etc/issue.net':
-    ensure  => 'file',
-    content => template('motd/issue.erb'),
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
+  if $enable_issue {
+    file { '/etc/issue':
+      ensure  => 'file',
+      content => template('motd/issue.erb'),
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+    }
+    file { '/etc/issue.net':
+      ensure  => 'file',
+      content => template('motd/issue.erb'),
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+    }
   }
 }
 
