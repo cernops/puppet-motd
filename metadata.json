@@ -2,7 +2,7 @@
   "project_page": "https://github.com/cernops/puppet-motd",
   "author": "CERNOps",
   "source": "https://github.com/cernops/puppet-motd",
-  "license": "Apache License, Version 2.0",
+  "license": "Apache-2.0",
   "version": "2.0.0",
   "name": "CERNOps-motd",
   "dependencies": [
